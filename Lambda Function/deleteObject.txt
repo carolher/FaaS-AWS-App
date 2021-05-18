@@ -1,0 +1,15 @@
+import json
+import urllib
+import boto3
+
+s3 = boto3.client('s3')
+
+def lambda_handler(event, context):
+    bucket = 'serverlessdrive-latest'
+    #event["queryStringParameters"]["Key"]
+    key = urllib.parse.unquote_plus(event['queryStringParameters']['name'])
+    try:
+        response = s3.delete_object(Bucket=bucket, Key=key)
+    except Exception as e:
+        print(e)
+        raise e
